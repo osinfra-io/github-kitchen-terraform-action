@@ -1,0 +1,46 @@
+name: Docker Build and Push
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-push-docker-image:
+    name: Build and Push to GitHub Container Registry
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout
+      # https://github.com/marketplace/actions/checkout
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Docker Buildx
+      # https://github.com/marketplace/actions/docker-setup-buildx
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1.6.0
+
+      # Docker Login
+      # https://github.com/marketplace/actions/docker-login
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1.12.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build and Push Docker to GitHub Container Registry
+      # https://github.com/marketplace/actions/build-and-push-docker-images
+
+      - name: Build and Push to GitHub Container Registry
+        uses: docker/build-push-action@v2.8.0
+        with:
+          context: .
+          tags: |
+            ghcr.io/osinfra-io/github-kitchen-terraform-action:latest
+          cache-from: type=registry,ref=ghcr.io/osinfra-io/github-kitchen-terraform-action:latest
+          cache-to: type=inline
+          push: true
