@@ -23,6 +23,12 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
+      
+      # Docker Setup QEMU
+      # https://github.com/marketplace/actions/docker-setup-qemu
+      
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2.0.0
 
       # Docker Buildx
       # https://github.com/marketplace/actions/docker-setup-buildx
@@ -48,7 +54,7 @@ jobs:
         with:
           context: .
           tags: |
-            ghcr.io/osinfra-io/kitchen-terraform-action:test
+            ghcr.io/osinfra-io/github-kitchen-terraform-action:test
           cache-from: type=registry,ref=ghcr.io/osinfra-io/github-kitchen-terraform-action:test
           cache-to: type=inline
           load: true
