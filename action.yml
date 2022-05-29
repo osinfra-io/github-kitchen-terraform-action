@@ -1,4 +1,4 @@
-name: Kitchen Terraform Action
+name: Kitchen-Terraform Github Action
 description: Run kitchen-terraform commands
 branding:
   icon: arrow-left
