@@ -1,4 +1,4 @@
-name: Add to Infrastructure as Code (IaC) project
+name: Add To GitHub Projects 
 
 on:
   issues:
@@ -10,6 +10,10 @@ on:
 
 jobs:
   add-to-project:
+    permissions:
+      issues: write
+      pull-requests: write
+
     name: Add To GitHub Projects
     runs-on: ubuntu-latest
 
