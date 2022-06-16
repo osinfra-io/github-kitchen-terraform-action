@@ -1,4 +1,4 @@
-# Github action for Kitchen-Terraform [![Docker Build and Push](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/build-and-push.yml)
+# Kitchen-Terraform Github Action [![Docker Build and Push](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/build-and-push.yml)
 
 [![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/osinfra-io/github-kitchen-terraform-action/cis_docker_12)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=osinfra-io%2Fgithub-kitchen-terraform-action&benchmark=CIS+DOCKER+V1.2)
 
