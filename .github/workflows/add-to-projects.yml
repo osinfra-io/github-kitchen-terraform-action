@@ -22,7 +22,7 @@ jobs:
       # https://github.com/marketplace/actions/add-to-github-projects-beta
       
       - name: Add To GitHub IaC Project
-        uses: actions/add-to-project@v0.1.0
+        uses: actions/add-to-project@v0.2.0
         with:
           project-url: https://github.com/orgs/osinfra-io/projects/1
           github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
