@@ -1,3 +1,6 @@
+# Pre-commit
+# https://github.com/pre-commit/pre-commit
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.3.0
@@ -7,7 +10,7 @@ repos:
       - id: trailing-whitespace
       - id: no-commit-to-branch
 
-  - repo: https://github.com/bridgecrewio/checkov.git
+  - repo: https://github.com/bridgecrewio/checkov
     rev: 2.2.72
     hooks:
       - id: checkov
