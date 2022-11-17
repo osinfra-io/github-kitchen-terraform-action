@@ -1,4 +1,8 @@
+# Metadata for GitHub Actions
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions
+
 name: Kitchen-Terraform Github Action
+author: osinfra.io
 description: Run kitchen-terraform commands
 branding:
   icon: arrow-left

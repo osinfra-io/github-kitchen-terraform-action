@@ -1,6 +1,12 @@
-# Kitchen-Terraform Github Action [![Docker Build and Push](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/build-and-push.yml)
+# <img align="left" width="45" height="45" src="https://user-images.githubusercontent.com/1610100/202321831-9cf218f9-660d-481f-8578-c2ba19fcc93a.png"> Kitchen-Terraform Github Action
 
-[![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/osinfra-io/github-kitchen-terraform-action/cis_docker_12)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=osinfra-io%2Fgithub-kitchen-terraform-action&benchmark=CIS+DOCKER+V1.2)
+**[GitHub Actions](https://github.com/osinfra-io/github-kitchen-terraform-action/actions):**
+
+[![Dependabot](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/dependabot.yml/badge.svg)](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/dependabot.yml)
+
+**[Bridgecrew](https://bridgecrew.io/):**
+
+[![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/osinfra-io/github-kitchen-terraform-action/cis_gcp)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=osinfra-io%2Fgithub-kitchen-terraform-action&benchmark=CIS+GCP+V1.1)
 
 [Kitchen-Terraform](https://github.com/newcontext-oss/kitchen-terraform) provides a set of Kitchen plugins which enable the use of Kitchen to converge a Terraform configuration and verify the resulting infrastructure systems with InSpec controls.
 
@@ -26,7 +32,7 @@ More Examples:
 
 ```yaml
 - name: Kitchen Test
-  uses: osinfra-io/github-kitchen-terraform-action@v1.0.0
+  uses: osinfra-io/github-kitchen-terraform-action@v1.2.0
   with:
     kitchen-command: "test"
 ```
