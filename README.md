@@ -1,4 +1,4 @@
-# <img align="left" width="45" height="45" src="https://user-images.githubusercontent.com/1610100/195462632-f70a64d6-7811-4da3-aa82-c65cbbb74754.png"> Kitchen-Terraform Github Action
+# <img align="left" width="45" height="45" src="https://user-images.githubusercontent.com/1610100/202321831-9cf218f9-660d-481f-8578-c2ba19fcc93a.png"> Kitchen-Terraform Github Action
 
 **[GitHub Actions](https://github.com/osinfra-io/github-kitchen-terraform-action/actions):**
 
