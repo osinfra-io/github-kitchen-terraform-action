@@ -44,7 +44,7 @@ jobs:
       # https://github.com/marketplace/actions/build-and-push-docker-images
 
       - name: Build and Test Docker Image
-        uses: docker/build-push-action@v3.2.0
+        uses: docker/build-push-action@v3.3.0
         with:
           context: .
           tags: |
