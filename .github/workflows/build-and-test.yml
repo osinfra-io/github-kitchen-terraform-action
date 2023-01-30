@@ -28,7 +28,7 @@ jobs:
       # https://github.com/marketplace/actions/docker-setup-buildx
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2.2.1
+        uses: docker/setup-buildx-action@v2.4.0
 
       # Docker Login
       # https://github.com/marketplace/actions/docker-login
