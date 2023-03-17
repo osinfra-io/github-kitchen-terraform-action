@@ -1,4 +1,4 @@
-FROM hashicorp/terraform:1.4.1
+FROM hashicorp/terraform:1.4.2
 # checkov:skip=BC_DKR_3: GitHub Actions must be run by the default Docker user (root).
 # Ensure your Dockerfile does not set the USER instruction, otherwise you will not be able to access GITHUB_WORKSPACE.
 
