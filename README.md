@@ -33,4 +33,4 @@ More Examples:
     kitchen-command: "test"
 ```
 
-[Called workflow example](https://github.com/osinfra-io/github-terraform-gcp-called-workflows/blob/main/.github/workflows/kitchen-terraform.yml)
+An example called workflow can be found [here]](https://github.com/osinfra-io/github-terraform-gcp-called-workflows/blob/main/.github/workflows/kitchen-terraform.yml).
