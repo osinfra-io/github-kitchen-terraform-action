@@ -28,7 +28,9 @@ More Examples:
 
 ```yaml
 - name: Kitchen Test
-  uses: osinfra-io/github-kitchen-terraform-action@v1.2.3
+  uses: osinfra-io/github-kitchen-terraform-action@v2.0.0
   with:
     kitchen-command: "test"
 ```
+
+[Called workflow example](https://github.com/osinfra-io/github-terraform-gcp-called-workflows/blob/main/.github/workflows/kitchen-terraform.yml)
