@@ -1,5 +1,5 @@
 FROM hashicorp/terraform:1.4.5
-# checkov:skip=BC_DKR_3: GitHub Actions must be run by the default Docker user (root).
+
 # Ensure your Dockerfile does not set the USER instruction, otherwise you will not be able to access GITHUB_WORKSPACE.
 
 HEALTHCHECK NONE
@@ -10,6 +10,7 @@ ENV BUNDLE_GEMFILE /Gemfile
 
 # Update and install all of the required packages.
 # At the end, remove the apk cache
+
 RUN apk update && \
     apk add $BUILD_PACKAGES && \
     apk add $RUBY_PACKAGES && \

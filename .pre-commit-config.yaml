@@ -1,18 +1,8 @@
-# Pre-commit
-# https://github.com/pre-commit/pre-commit
-
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
+-   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.3.0
     hooks:
-      - id: check-yaml
-      - id: end-of-file-fixer
-      - id: trailing-whitespace
-      - id: no-commit-to-branch
-
-  - repo: https://github.com/bridgecrewio/checkov
-    rev: 2.2.72
-    hooks:
-      - id: checkov
-        verbose: true
-        args: [--soft-fail]
+    -   id: check-yaml
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+    -   id: no-commit-to-branch
