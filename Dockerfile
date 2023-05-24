@@ -14,9 +14,13 @@ ENV BUNDLE_GEMFILE /Gemfile
 RUN apk update && \
     apk add $BUILD_PACKAGES && \
     apk add $RUBY_PACKAGES && \
+    apk add python3 py3-pip && \
+    pip3 install pyyaml && \
     rm -rf /var/cache/apk/*
 
 COPY Gemfile /Gemfile
+COPY kitchen-tmpl.yml /kitchen-tmpl.yml
+COPY test.py /test.py
 
 RUN bundle install
 

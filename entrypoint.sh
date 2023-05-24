@@ -1,3 +1,3 @@
 #!/bin/sh -l
 
-bundle exec kitchen $1
+python /test.py $1

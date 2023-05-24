@@ -1,3 +1,8 @@
-source 'https://rubygems.org'
+source "https://rubygems.org/" do
+  gem "kitchen-terraform", "~> 7.0"
+  gem "kitchen-verifier-awspec"
+  gem "rhcl"
+  gem "awspec"
+  gem "aws-sdk"
 
-gem 'kitchen-terraform', '7.0.2'
+end

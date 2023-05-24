@@ -13,7 +13,9 @@ inputs:
     required: true
     default: help
 runs:
+
   using: docker
-  image: docker://ghcr.io/osinfra-io/github-kitchen-terraform-action:latest
+  image: docker://faisalshah/kitchen-terraform:latest
   args:
     - ${{ inputs.kitchen-command }}
+    - ${{ inputs.gh_token }}

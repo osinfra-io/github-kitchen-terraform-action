@@ -1,0 +1,28 @@
+---
+driver:
+  name: terraform
+  backend_configurations:
+    region: "eu-west-1"
+    bucket: "auto1-kitchen-terraform"
+    key: "kitchen.tfstate"
+  variable_files:
+    - "dummy"
+
+transport:
+  name: terraform
+  root_module_directory: ./kitchen-terraform/test/fixtures/tf_module
+
+platforms:
+- name: aws
+
+provisioner:
+  name: terraform
+
+suites:
+- name: default
+  verifier:
+    patterns:
+    - ./kitchen-terraform/test/integration/default/test_ecs_service.rb
+
+verifier:
+  name: awspec
