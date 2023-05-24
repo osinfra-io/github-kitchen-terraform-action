@@ -12,10 +12,8 @@ inputs:
     description: "The command to run for example: help"
     required: true
     default: help
-runs:
-
-  using: docker
-  image: docker://faisalshah/kitchen-terraform:latest
-  args:
-    - ${{ inputs.kitchen-command }}
-    - ${{ inputs.gh_token }}
+#runs:
+#  using: docker
+#  image: docker://faisalshah/kitchen-terraform:latest
+#  args:
+#    - ${{ inputs.kitchen-command }}

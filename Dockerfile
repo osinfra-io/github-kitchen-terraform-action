@@ -14,8 +14,9 @@ ENV BUNDLE_GEMFILE /Gemfile
 RUN apk update && \
     apk add $BUILD_PACKAGES && \
     apk add $RUBY_PACKAGES && \
-    apk add python3 py3-pip && \
+    apk add python3 py3-pip nodejs && \
     pip3 install pyyaml && \
+    pip3 install hvac && \
     rm -rf /var/cache/apk/*
 
 COPY Gemfile /Gemfile

@@ -4,7 +4,9 @@ import yaml
 import subprocess
 import sys
 
+
 test_dir = "./kitchen-terraform/test/fixtures/ecs_service"
+
 
 test_files = []
 
@@ -21,7 +23,7 @@ for i in test_files:
         print("## Running for {} file ##".format(i))
 
 # create kitchen.yml with test tfvars file
-        with open('kqb') as kitchen:
+        with open('kitchen.yml', 'wb') as kitchen:
             yaml.safe_dump(data, kitchen, default_flow_style=False,
                            explicit_start=True, allow_unicode=True, encoding='utf-8')
         kitchen.close()
