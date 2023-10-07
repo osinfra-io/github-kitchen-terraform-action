@@ -4,7 +4,7 @@
 
 [![Dependabot](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/dependabot.yml/badge.svg)](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/dependabot.yml) [![CodeQL](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/github-code-scanning/codeql)
 
-[Kitchen-Terraform](https://github.com/newcontext-oss/kitchen-terraform) provides a set of Kitchen plugins which enable the use of Kitchen to converge a Terraform configuration and verify the resulting infrastructure systems with InSpec controls.
+[Kitchen-Terraform](https://github.com/newcontext-oss/kitchen-terraform) provides a set of Kitchen plugins that enable the use of Kitchen to converge a Terraform configuration and verify the resulting infrastructure systems with InSpec controls.
 
 ## Inputs
 
