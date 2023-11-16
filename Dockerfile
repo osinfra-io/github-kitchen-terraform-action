@@ -1,4 +1,4 @@
-FROM hashicorp/terraform:1.6.3
+FROM hashicorp/terraform:1.6.4
 
 # Ensure your Dockerfile does not set the USER instruction, otherwise you will not be able to access GITHUB_WORKSPACE.
 
