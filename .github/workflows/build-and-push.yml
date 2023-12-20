@@ -8,6 +8,8 @@ jobs:
   build-and-push-docker-image:
     name: Build and Push to GitHub Container Registry
     runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ github.event.release.tag_name }}
 
     steps:
       # Checkout
@@ -40,6 +42,7 @@ jobs:
         with:
           context: .
           tags: |
+            ghcr.io/osinfra-io/github-kitchen-terraform-action:${{ env.VERSION }}
             ghcr.io/osinfra-io/github-kitchen-terraform-action:latest
           cache-from: type=registry,ref=ghcr.io/osinfra-io/github-kitchen-terraform-action:latest
           cache-to: type=inline
