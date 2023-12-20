@@ -1,3 +1,3 @@
 source 'https://rubygems.org'
 
-gem 'kitchen-terraform', '7.0.2'
+gem 'kitchen-terraform', '~> 7.0.2'

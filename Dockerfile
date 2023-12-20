@@ -4,7 +4,7 @@ FROM hashicorp/terraform:1.6.6
 
 HEALTHCHECK NONE
 
-ENV BUILD_PACKAGES bash ruby-dev build-base
+ENV BUILD_PACKAGES bash ruby-dev build-base libffi-dev
 ENV RUBY_PACKAGES ruby ruby-bundler
 ENV BUNDLE_GEMFILE /Gemfile
 

@@ -5,7 +5,7 @@ name: Kitchen-Terraform Github Action
 author: osinfra.io
 description: Run kitchen-terraform commands
 branding:
-  icon: arrow-left
+  icon: terminal
   color: gray-dark
 inputs:
   kitchen-command:

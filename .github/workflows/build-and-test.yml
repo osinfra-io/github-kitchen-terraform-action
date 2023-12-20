@@ -2,11 +2,6 @@ name: Docker Build and Test
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - "**.md"
   pull_request:
     paths-ignore:
       - "**.md"
@@ -49,8 +44,8 @@ jobs:
           context: .
           tags: |
             ghcr.io/osinfra-io/github-kitchen-terraform-action:test
-          cache-from: type=registry,ref=ghcr.io/osinfra-io/github-kitchen-terraform-action:latest
-          cache-to: type=inline
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           load: true
 
       - name: Test
