@@ -24,13 +24,25 @@ More Examples:
   version                           # Print Kitchen's version information
 ```
 
+### `kitchen-instance`
+
+**Optional** The name of the instance to run the command on. You can run `kitchen list` to see the available instances.
+
 ## Example usage
 
 ```yaml
 - name: Kitchen Test
-  uses: osinfra-io/github-kitchen-terraform-action@v2.3.3
+  uses: osinfra-io/github-kitchen-terraform-action@v2.5.0
   with:
-    kitchen-command: "test"
+    kitchen-command: "converge"
+```
+
+```yaml
+- name: Kitchen Destroy
+  uses: osinfra-io/github-kitchen-terraform-action@v2.5.0
+  with:
+    kitchen-command: "destroy"
+    kitchen-instance: "default-test-gcp"
 ```
 
 An example called workflow can be found [here](https://github.com/osinfra-io/github-terraform-gcp-called-workflows/blob/main/.github/workflows/kitchen-terraform.yml).

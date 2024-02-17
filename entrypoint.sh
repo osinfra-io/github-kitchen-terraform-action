@@ -1,3 +1,3 @@
 #!/bin/sh -l
 
-bundle exec kitchen $1
+bundle exec kitchen $1 $2
