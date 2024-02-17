@@ -17,6 +17,7 @@ inputs:
     required: false
 runs:
   using: docker
-  image: docker://ghcr.io/osinfra-io/github-kitchen-terraform-action:latest
+  image: docker://ghcr.io/osinfra-io/github-kitchen-terraform-action:v2.5.1
   args:
     - ${{ inputs.kitchen-command }}
+    - ${{ inputs.kitchen-instance }}
