@@ -34,7 +34,7 @@ example if you need to destroy a specific instance when dealing with more comple
 ## Example usage
 
 ```yaml
-- name: Kitchen Test
+- name: Kitchen Converge
   uses: osinfra-io/github-kitchen-terraform-action@v2.5.0
   with:
     kitchen-command: "converge"
