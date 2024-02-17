@@ -1,3 +1,7 @@
 #!/bin/sh -l
 
-bundle exec kitchen $1 $2
+if [ -z "$2" ]; then
+  bundle exec kitchen "$1"
+else
+  bundle exec kitchen "$1" "$2"
+fi
