@@ -12,6 +12,9 @@ inputs:
     description: "The command to run for example: help"
     required: true
     default: help
+  kitchen-instance:
+    description: "The instance to run the command on"
+    required: false
 runs:
   using: docker
   image: docker://ghcr.io/osinfra-io/github-kitchen-terraform-action:latest

@@ -50,4 +50,4 @@ jobs:
 
       - name: Test
         run: |
-          docker run --rm ghcr.io/osinfra-io/github-kitchen-terraform-action:test
+          docker run --rm ghcr.io/osinfra-io/github-kitchen-terraform-action:test help
