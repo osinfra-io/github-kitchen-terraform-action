@@ -28,6 +28,9 @@ More Examples:
 
 **Optional** The name of the instance to run the command on. You can run `kitchen list` to see the available instances.
 
+This is useful when you have multiple instances in your `.kitchen.yml` file and you want to run the command on a specific instance for
+example if you need to destroy a specific instance when dealing with more complex test scenarios.
+
 ## Example usage
 
 ```yaml
