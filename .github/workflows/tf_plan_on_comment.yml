@@ -59,7 +59,6 @@ jobs:
 
       - name: Generate Unique ID
         id: generate_id
-        if: steps.check_comment.outputs.TRIGGERED == 'true'
         run: echo "::set-output name=ID::$(date +%Y%m%d%H%M%S)-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1)"
 
       - name: Plan
@@ -104,13 +103,11 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const data = fs.readFileSync('tfplan', 'utf8');
-            const { owner, repo } = github.context.repo;
-            const prNumber = process.env.PR_NUMBER;
-            const octokit = new github.getOctokit(process.env.GITHUB_TOKEN);
-            await octokit.issues.createComment({
-              owner: owner,
-              repo: repo,
-              issue_number: prNumber,
-              body: 'Terraform Plan:\n```' + data + '```\n',
+            const testFolder = '.';
+
+            fs.readdir(testFolder, (err, files) => {
+              files.forEach(file => {
+                console.log(file);
+              });
             });
+
