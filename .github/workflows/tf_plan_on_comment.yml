@@ -55,7 +55,9 @@ jobs:
 
       - name: Extract Pull Request Number
         id: extract_pr_number
-        run: echo "::set-output name=PR_NUMBER::$(jq -r '.issue.number' $GITHUB_EVENT_PATH)"
+        run: |
+          npm install @actions/github
+          echo "::set-output name=PR_NUMBER::$(jq -r '.issue.number' $GITHUB_EVENT_PATH)"
 
 #      - name: Generate Unique ID
 #        id: generate_id
