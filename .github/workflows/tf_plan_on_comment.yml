@@ -106,8 +106,7 @@ jobs:
           script: |
             const fs = require('fs');
             const data = fs.readFileSync('tf.plan', 'utf8');
-            const { context } = github;
-            const { owner, repo } = context.repo;
+            const { owner, repo } = github.context.repo;
             const prNumber = process.env.PR_NUMBER;
             const octokit = new github.getOctokit(process.env.GITHUB_TOKEN);
             await octokit.issues.createComment({
