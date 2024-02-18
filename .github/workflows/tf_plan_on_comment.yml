@@ -90,7 +90,7 @@ jobs:
           fi
 
           terraform init -reconfigure > /dev/null 2>&1
-          terraform plan -out=/tmp/tfplan
+          terraform plan -no-color -out=/tmp/tfplan
           terraform show /tmp/tfplan |& tee /tmp/tfplan.txt
 
         env:
