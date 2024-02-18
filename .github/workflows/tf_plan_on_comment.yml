@@ -1,0 +1,187 @@
+name: "tf_action_from_comment"
+
+on:
+  issue_comment:
+    types:
+      - created
+
+env:
+  SSH_KEYS: |
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ACM }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ACM_CERTS_MULTIREGION }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ACM_FOR_CLOUDFRONT_DISTRIBUTIONS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ACM_FOR_INT_DOMAINS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ACM_MULTI_REGION_CERTS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ADCLIENT }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_AIRFLOW }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_AMIS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_API_METHOD }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ASG }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_AUTO_TAG }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_AWS_ACCOUNT }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_BACKUP }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_BACKUP_DYNAMODB }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_BACKUP_RDS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_BACKUP_STORAGE }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_BACKUP_TAGS_CHECK }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_BU_LEGACY_ZONE }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_BU_PRIVATE_ZONE }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_BU_PUBLIC_ZONE }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_CLOUD_GARBAGE_COLLECTOR }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_CLOUDFRONT_CDN_APPS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_COMPLIANCE }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_CONSUL_CLUSTER }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_CONSUL_CLUSTER_ASG }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_CONSUL_HAPROXY }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_CW_OPSGENIE_ALERT }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_CW_STREAMS_TELEGRAF }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_DMS_INSTANCE }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_DMS_TASK }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_DNS_WILDCARD_RECORD }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_DOCUMENTDB }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_DYNAMODB }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_DYNAMODB_APP_ASG }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_EC2 }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ECK }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ECR_LIFECYCLE }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ECR_MANAGEMENT }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ECS_APP }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ECS_APP_ASG }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ECS_MICRO_FRONTEND_APP }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ECS_SERVICE }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_EKS_ASG }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ELASTICACHE_MEMCACHED }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ELASTICACHE_REDIS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ELK_CONIFG }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_EMR_CLUSTER }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ES_NODE }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_FILEBEAT }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_GH_OPENIDP }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_GH_RUNNER }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_GHACTION_ECS_RUNNER }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_GLUE_JOB }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_HEAP_DUMPER_CRONJOB }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_INFLUXDB }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_JENKINS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_K8S_JENKINS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_K8S_KUBECTL_REMOTE_MANIFEST }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_K8S_SERVICE_ACCOUNT_IAM_ROLE }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_KMS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_LAMBDA_OKTA_PY }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_LOADBALANCER_REDIRECT_RULES }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_MONITORING_TELEGRAF }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_OKTA_APPS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_OKTA_AWS_CLIENT_VPN }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ORGA_IAM_USER_GROUPS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_ORGA_IAM_USER_POLICIES }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_RDS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_RDS_AURORA }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_RDS_TELEGRAF }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_REDASH }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_REDASH_DBACCESS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_REGISTRATOR }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_SAGEMAKER }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_SECRETSMANAGER }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_SERVICE_QUOTA }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_SES_DOMAIN_EMAIL }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_SES_DOMAIN_IDENTITY }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_SES_IDENTITY }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_SFTP_TRANSFER }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_SQS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_TABLEAU_BACKUP }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_TABLEAU_ECS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_TAGGING_DOMAINS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_TELEGRAF }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_TELEGRAF_KINESIS_CONSUMER }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_TELEGRAF_PHPFPM }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_TELEGRAF_SRE }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_VPC_SFTP_TRANSFER }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_VPCENDPOINT_DNS }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_WAFV2 }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_WAFV2_CLOUDFRONT_DISTRIBUTION }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_WAFV2_LOG_PIPELINE }}
+    ${{ secrets.SSHACCESS_OPS_TF_MODULE_WAFV2_SECRETS_ROTATION_LAMBDA }}
+    ${{ secrets.SSHACCESS_ELASTIC_CONFIG }}
+
+jobs:
+  comment:
+    name: read_comment
+    runs-on: github_runner_crossaccount
+    outputs:
+      action: ${{ steps.extract.outputs.action }}
+      workspace: ${{ steps.extract.outputs.workspace }}
+      tfdir: ${{ steps.extract.outputs.tfdir }}
+
+    steps:
+      - name: Read comment
+        id: extract
+        run: |
+          body=$(echo "${{ github.event.comment.body }}")
+          action=$(echo "${{ github.event.comment.body }}" | awk '{print $1}')
+          workspace=$(echo "${{ github.event.comment.body }}" | awk '{print $2}')
+          tfdir=$(echo "${{ github.event.comment.body }}" | awk '{print $3}')
+
+          echo "action=$action" >> "$GITHUB_OUTPUT"
+          echo "workspace=$workspace" >> "$GITHUB_OUTPUT"
+          echo "tfdir=$tfdir" >> "$GITHUB_OUTPUT"
+
+      - name: check step output
+        run: |
+          echo "First argument: ${{ steps.extract.outputs.action }}"
+          echo "Second argument: ${{ steps.extract.outputs.workspace }}"
+          echo "Third argument: ${{ steps.extract.outputs.tfdir }}"
+
+  tfplan:
+    needs: comment
+    runs-on: ${{ needs.comment.outputs.workspace }}
+    name: "tf_action"
+    defaults:
+      run:
+        working-directory: ${{ needs.comment.outputs.tfdir }}
+    steps:
+
+      - uses: xt0rted/pull-request-comment-branch@v2
+        id: comment-branch
+
+      - name: Checkout
+        uses: actions/checkout@v1
+        with:
+          ref: ${{ steps.comment-branch.outputs.head_ref }}
+
+      - name: setup ssh keys
+        uses: auto1-oss/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ env.SSH_KEYS }}
+
+      - name: Plan
+        id: plan
+        run: |
+          set +e
+          export TF_WORKSPACE=${{ needs.comment.outputs.workspace }}
+          if [[ $TF_WORKSPACE == "prod" ]]; then
+            unset VAULT_TOKEN
+            export VAULT_ADDR=https://vault.prod.auto1.team
+            export VAULT_TOKEN="$VAULT_TOKEN_PROD"
+          elif [[ $TF_WORKSPACE == "qa" ]]; then
+            export VAULT_ADDR=https://vault.qa.auto1.team
+            export VAULT_TOKEN="$VAULT_TOKEN_QA"
+          else
+            unset VAULT_TOKEN
+            export VAULT_ADDR=https://vault.prod.auto1.team
+            export VAULT_TOKEN="$VAULT_TOKEN_PROD"
+          fi
+          terraform init -reconfigure > /dev/null 2>&1
+          terraform plan -no-color 2>&1 | tee ${{ github.workspace }}/plan_output.txt
+
+        env:
+          VAULT_TOKEN_QA: ${{ secrets.VAULT_TOKEN_QA }}
+          VAULT_TOKEN_PROD: ${{ secrets.VAULT_TOKEN_PROD }}
+        continue-on-error: true
+
+      - name: Comment Terraform Plan on PR
+        uses: blinqas/tf-plan-pr-comment@v1
+        with:
+          output_file: ${{ github.workspace }}/plan_output.txt
+          headline: "Plan for ${{ steps.plan.outputs.tfplan_workspace }}/${{ steps.plan.outputs.tfplan_dir }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
