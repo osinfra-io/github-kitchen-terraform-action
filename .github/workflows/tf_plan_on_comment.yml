@@ -91,7 +91,7 @@ jobs:
 
           terraform init -reconfigure > /dev/null 2>&1
           terraform plan -no-color -out=/tmp/tfplan
-          terraform show /tmp/tfplan |& tee /tmp/tfplan.txt
+          terraform show -no-color /tmp/tfplan | tee /tmp/tfplan.txt
 
         env:
           VAULT_TOKEN_QA: ${{ secrets.VAULT_TOKEN_QA }}
