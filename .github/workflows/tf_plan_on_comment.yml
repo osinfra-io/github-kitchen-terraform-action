@@ -37,9 +37,9 @@ jobs:
     needs: comment
     runs-on: ubuntu-latest
     name: "tf_action"
-#    defaults:
-#      run:
-#        working-directory: ${{ needs.comment.outputs.tfdir }}
+    defaults:
+      run:
+        working-directory: ${{ needs.comment.outputs.tfdir }}
     steps:
 
       - uses: xt0rted/pull-request-comment-branch@v2
@@ -57,9 +57,6 @@ jobs:
 
           echo "testDir"
           pwd
-          ls -l
-
-          cd ${{ needs.comment.outputs.tfdir }}
           sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
           wget -O- https://apt.releases.hashicorp.com/gpg | \
           gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
@@ -82,11 +79,12 @@ jobs:
             export VAULT_ADDR=https://vault.prod.auto1.team
             export VAULT_TOKEN="$VAULT_TOKEN_PROD"
           fi
+
           terraform init -reconfigure > /dev/null 2>&1
-          terraform plan -no-color 2>&1 | tee ${{ github.workspace }}/plan_output.txt
+          terraform plan -no-color 2>&1 | tee /tmp/plan.txt
 
           echo "print outfile path"
-          pwd && ls -l {{ github.workspace }}
+          pwd
 
         env:
           VAULT_TOKEN_QA: ${{ secrets.VAULT_TOKEN_QA }}
@@ -96,7 +94,7 @@ jobs:
       - name: Comment Terraform Plan on PR
         uses: blinqas/tf-plan-pr-comment@v1
         with:
-          output_file: ${{ github.workspace }}/plan_output.txt
+          output_file: /tmp/plan.txt
           headline: "Plan for ${{ steps.plan.outputs.tfplan_workspace }}/${{ steps.plan.outputs.tfplan_dir }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
