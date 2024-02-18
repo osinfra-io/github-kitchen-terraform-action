@@ -57,7 +57,6 @@ jobs:
 
           echo "testDir"
           pwd
-
           ls -l
 
           cd ${{ needs.comment.outputs.tfdir }}
