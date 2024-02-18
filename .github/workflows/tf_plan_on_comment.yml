@@ -81,7 +81,9 @@ jobs:
           fi
 
           terraform init -reconfigure > /dev/null 2>&1
-          terraform plan -no-color 2>&1 | tee /tmp/plan.txt
+
+          terraform plan -no-color 2>&1 | tee ~/{{ github.workspace }}/plan.txt
+
           echo "print outfile path"
           pwd
 
@@ -93,7 +95,7 @@ jobs:
       - name: Comment Terraform Plan on PR
         uses: blinqas/tf-plan-pr-comment@v1
         with:
-          output_file: /tmp/plan.txt
+          output_file: ~/{{ github.workspace }}/plan.txt
           headline: "Plan for ${{ steps.plan.outputs.tfplan_workspace }}/${{ steps.plan.outputs.tfplan_dir }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
