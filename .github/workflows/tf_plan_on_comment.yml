@@ -84,6 +84,7 @@ jobs:
           terraform plan -no-color 2>&1 | tee ~/{{ github.workspace }}/plan.txt
 
           echo "print outfile path"
+          cat ~/{{ github.workspace }}/plan.txt
           pwd
 
         env:
@@ -95,6 +96,6 @@ jobs:
         uses: blinqas/tf-plan-pr-comment@v1
         with:
           output_file: ~/{{ github.workspace }}/plan.txt
-          headline: "Plan for ${{ steps.plan.outputs.tfplan_workspace }}/${{ steps.plan.outputs.tfplan_dir }}"
+          headline: "Plan for ${{ needs.comment.outputs.workspace }}/${{ needs.comment.outputs.tfdir }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
