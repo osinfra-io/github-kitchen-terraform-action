@@ -103,14 +103,18 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const data = fs.readFileSync('/tmp/tfplan', 'utf8');
-            const { owner, repo } = github.context.repo;
             const prNumber = process.env.PR_NUMBER;
             const octokit = new github.getOctokit(process.env.GITHUB_TOKEN);
-            await octokit.issues.createComment({
-              owner: owner,
-              repo: repo,
-              issue_number: prNumber,
-              body: 'Terraform Plan:\n```' + data + '```\n',
-            });
+            try {
+              const data = fs.readFileSync('/tmp/tfplan', 'utf8');
+              const { owner, repo } = context.payload.repository;
+              await octokit.issues.createComment({
+                owner: owner,
+                repo: repo,
+                issue_number: prNumber,
+                body: 'Terraform Plan:\n```' + data + '```\n',
+              });
+            } catch (error) {
+              console.error('Error:', error);
+            }
 
