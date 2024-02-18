@@ -57,9 +57,9 @@ jobs:
         id: extract_pr_number
         run: echo "::set-output name=PR_NUMBER::$(jq -r '.issue.number' $GITHUB_EVENT_PATH)"
 
-      - name: Generate Unique ID
-        id: generate_id
-        run: echo "::set-output name=ID::$(date +%Y%m%d%H%M%S)-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1)"
+#      - name: Generate Unique ID
+#        id: generate_id
+#        run: echo "::set-output name=ID::$(date +%Y%m%d%H%M%S)-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1)"
 
       - name: Plan
         id: plan
@@ -94,7 +94,7 @@ jobs:
       - name: Save Plan File as Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: terraform-plan-${{ steps.generate_id.outputs.ID }}
+          name: terraform-plan
           path: tfplan
 
       - name: Comment on Pull Request
