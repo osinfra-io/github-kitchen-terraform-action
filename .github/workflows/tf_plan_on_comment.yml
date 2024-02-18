@@ -53,6 +53,15 @@ jobs:
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
 
+      - name: Extract Pull Request Number
+        id: extract_pr_number
+        run: echo "::set-output name=PR_NUMBER::$(jq -r '.issue.number' $GITHUB_EVENT_PATH)"
+
+      - name: Generate Unique ID
+        id: generate_id
+        if: steps.check_comment.outputs.TRIGGERED == 'true'
+        run: echo "::set-output name=ID::$(date +%Y%m%d%H%M%S)-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1)"
+
       - name: Plan
         id: plan
         run: |
@@ -74,7 +83,8 @@ jobs:
           fi
 
           terraform init -reconfigure > /dev/null 2>&1
-          terraform plan |& tee tf_plan.txt
+          terraform plan out=tf.plan
+          terraform show tf.plan |& tee tf_plan.txt
 
         env:
           VAULT_TOKEN_QA: ${{ secrets.VAULT_TOKEN_QA }}
@@ -82,12 +92,27 @@ jobs:
 
         continue-on-error: true
 
-      - name: Comment Terraform Plan on PR
-        uses: GetTerminus/terraform-pr-commenter@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TF_WORKSPACE: ${{ needs.comment.outputs.workspace }}
+      - name: Save Plan File as Artifact
+        if: steps.check_comment.outputs.TRIGGERED == 'true'
+        uses: actions/upload-artifact@v2
         with:
-          commenter_type: plan
-          commenter_input: tf_plan.txt
-          commenter_exitcode: ${{ steps.plan.outputs.exit }}
+          name: terraform-plan-${{ steps.generate_id.outputs.ID }}
+          path: tf.plan
+
+      - name: Comment on Pull Request
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const data = fs.readFileSync('tf.plan', 'utf8');
+            const { context } = github;
+            const { owner, repo } = context.repo;
+            const prNumber = process.env.PR_NUMBER;
+            const octokit = new github.getOctokit(process.env.GITHUB_TOKEN);
+            await octokit.issues.createComment({
+              owner: owner,
+              repo: repo,
+              issue_number: prNumber,
+              body: 'Terraform Plan:\n```' + data + '```\n',
+            });
