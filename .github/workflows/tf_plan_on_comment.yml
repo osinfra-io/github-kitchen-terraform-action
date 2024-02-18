@@ -1,0 +1,84 @@
+name: "tf_action_from_comment"
+
+on:
+  issue_comment:
+    types:
+      - created
+
+jobs:
+  comment:
+    name: read_comment
+    runs-on: ubuntu-latest
+    outputs:
+      action: ${{ steps.extract.outputs.action }}
+      workspace: ${{ steps.extract.outputs.workspace }}
+      tfdir: ${{ steps.extract.outputs.tfdir }}
+
+    steps:
+      - name: Read comment
+        id: extract
+        run: |
+          body=$(echo "${{ github.event.comment.body }}")
+          action=$(echo "${{ github.event.comment.body }}" | awk '{print $1}')
+          workspace=$(echo "${{ github.event.comment.body }}" | awk '{print $2}')
+          tfdir=$(echo "${{ github.event.comment.body }}" | awk '{print $3}')
+
+          echo "action=$action" >> "$GITHUB_OUTPUT"
+          echo "workspace=$workspace" >> "$GITHUB_OUTPUT"
+          echo "tfdir=$tfdir" >> "$GITHUB_OUTPUT"
+
+      - name: check step output
+        run: |
+          echo "First argument: ${{ steps.extract.outputs.action }}"
+          echo "Second argument: ${{ steps.extract.outputs.workspace }}"
+          echo "Third argument: ${{ steps.extract.outputs.tfdir }}"
+
+  tfplan:
+    needs: comment
+    runs-on: ${{ needs.comment.outputs.workspace }}
+    name: "tf_action"
+    defaults:
+      run:
+        working-directory: ${{ needs.comment.outputs.tfdir }}
+    steps:
+
+      - uses: xt0rted/pull-request-comment-branch@v2
+        id: comment-branch
+
+      - name: Checkout
+        uses: actions/checkout@v1
+        with:
+          ref: ${{ steps.comment-branch.outputs.head_ref }}
+
+      - name: Plan
+        id: plan
+        run: |
+          set +e
+          export TF_WORKSPACE=${{ needs.comment.outputs.workspace }}
+          if [[ $TF_WORKSPACE == "prod" ]]; then
+            unset VAULT_TOKEN
+            export VAULT_ADDR=https://vault.prod.auto1.team
+            export VAULT_TOKEN="$VAULT_TOKEN_PROD"
+          elif [[ $TF_WORKSPACE == "qa" ]]; then
+            export VAULT_ADDR=https://vault.qa.auto1.team
+            export VAULT_TOKEN="$VAULT_TOKEN_QA"
+          else
+            unset VAULT_TOKEN
+            export VAULT_ADDR=https://vault.prod.auto1.team
+            export VAULT_TOKEN="$VAULT_TOKEN_PROD"
+          fi
+          terraform init -reconfigure > /dev/null 2>&1
+          terraform plan -no-color 2>&1 | tee ${{ github.workspace }}/plan_output.txt
+
+        env:
+          VAULT_TOKEN_QA: ${{ secrets.VAULT_TOKEN_QA }}
+          VAULT_TOKEN_PROD: ${{ secrets.VAULT_TOKEN_PROD }}
+        continue-on-error: true
+
+      - name: Comment Terraform Plan on PR
+        uses: blinqas/tf-plan-pr-comment@v1
+        with:
+          output_file: ${{ github.workspace }}/plan_output.txt
+          headline: "Plan for ${{ steps.plan.outputs.tfplan_workspace }}/${{ steps.plan.outputs.tfplan_dir }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
