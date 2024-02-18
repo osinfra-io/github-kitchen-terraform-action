@@ -103,13 +103,13 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const { context, GitHub } = require('@actions/github');
+            const { context: githubContext, GitHub } = require('@actions/github');
 
             const prNumber = process.env.PR_NUMBER;
             const octokit = new GitHub(process.env.GITHUB_TOKEN);
             try {
               const data = fs.readFileSync('/tmp/tfplan', 'utf8');
-              const { owner, repo } = context.repo;
+              const { owner, repo } = githubContext.repo;
               await octokit.rest.issues.createComment({
                 owner: owner,
                 repo: repo,
