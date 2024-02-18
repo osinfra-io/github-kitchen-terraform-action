@@ -54,6 +54,16 @@ jobs:
         id: plan
         run: |
           set +e
+          sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
+          wget -O- https://apt.releases.hashicorp.com/gpg | \
+          gpg --dearmor | \
+          sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+          https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+          sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt update -y
+          sudo apt-get install terraform
+
           export TF_WORKSPACE=${{ needs.comment.outputs.workspace }}
           if [[ $TF_WORKSPACE == "prod" ]]; then
             unset VAULT_TOKEN
@@ -69,6 +79,7 @@ jobs:
           fi
           terraform init -reconfigure > /dev/null 2>&1
           terraform plan -no-color 2>&1 | tee ${{ github.workspace }}/plan_output.txt
+
         env:
           VAULT_TOKEN_QA: ${{ secrets.VAULT_TOKEN_QA }}
           VAULT_TOKEN_PROD: ${{ secrets.VAULT_TOKEN_PROD }}
