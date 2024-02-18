@@ -95,8 +95,9 @@ jobs:
 
       - name: Comment Terraform Plan on PR
         uses: blinqas/tf-plan-pr-comment@v1
-        with:
-          output_file: tfplan.txt
-          headline: "Plan for ${{ needs.comment.outputs.workspace }}/${{ needs.comment.outputs.tfdir }}"
+        run: pwd && ls -l
+        #with:
+        #  output_file: tfplan.txt
+        # headline: "Plan for ${{ needs.comment.outputs.workspace }}/${{ needs.comment.outputs.tfdir }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
