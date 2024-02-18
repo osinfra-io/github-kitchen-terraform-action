@@ -82,7 +82,6 @@ jobs:
 
           terraform init -reconfigure > /dev/null 2>&1
           terraform plan -no-color 2>&1 | tee /tmp/plan.txt
-
           echo "print outfile path"
           pwd
 
