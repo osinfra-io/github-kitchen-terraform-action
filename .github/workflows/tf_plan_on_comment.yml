@@ -81,14 +81,7 @@ jobs:
           fi
 
           terraform init -reconfigure > /dev/null 2>&1
-
-          terraform plan -no-color -out=tf.plan 2>&1
-          terraform show tf.plan | tee tfplan.txt
-
-
-          echo "print outfile path"
-          cat tfplan.txt
-          pwd
+          terraform plan -out=tf.plan
 
         env:
           VAULT_TOKEN_QA: ${{ secrets.VAULT_TOKEN_QA }}
@@ -96,9 +89,8 @@ jobs:
         continue-on-error: true
 
       - name: Comment Terraform Plan on PR
-        uses: blinqas/tf-plan-pr-comment@v1
+        uses: robburger/terraform-pr-commenter@v1
         with:
-          output_file: tfplan.txt
-          headline: "Plan for ${{ needs.comment.outputs.workspace }}/${{ needs.comment.outputs.tfdir }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          commenter_type: plan
+          commenter_input: ${{ format('{0}{1}', steps.plan.outputs.stdout, steps.plan.outputs.stderr) }}
+          commenter_exitcode: ${{ steps.plan.outputs.exitcode }}
