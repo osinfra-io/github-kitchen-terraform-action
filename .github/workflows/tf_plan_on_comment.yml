@@ -57,7 +57,6 @@ jobs:
 
           echo "testDir"
           pwd
-
           ls -l
 
           cd ${{ needs.comment.outputs.tfdir }}
@@ -85,6 +84,9 @@ jobs:
           fi
           terraform init -reconfigure > /dev/null 2>&1
           terraform plan -no-color 2>&1 | tee ${{ github.workspace }}/plan_output.txt
+
+          echo "print outfile path"
+          pwd && ls -l {{ github.workspace }}
 
         env:
           VAULT_TOKEN_QA: ${{ secrets.VAULT_TOKEN_QA }}
