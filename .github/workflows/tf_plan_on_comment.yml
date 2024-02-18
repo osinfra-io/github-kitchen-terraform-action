@@ -82,8 +82,8 @@ jobs:
           fi
 
           terraform init -reconfigure > /dev/null 2>&1
-          terraform plan -out=~/tfplan
-          terraform show ~/tfplan |& tee ~/tfplan.txt
+          terraform plan -out=/tmp/tfplan
+          terraform show /tmp/tfplan |& tee /tmp/tfplan.txt
 
         env:
           VAULT_TOKEN_QA: ${{ secrets.VAULT_TOKEN_QA }}
@@ -95,7 +95,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: terraform-plan
-          path: ~/tfplan
+          path: /tmp/tfplan
 
       - name: Comment on Pull Request
         uses: actions/github-script@v4
@@ -103,7 +103,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const data = fs.readFileSync('~/tfplan', 'utf8');
+            const data = fs.readFileSync('/tmp/tfplan', 'utf8');
             const { owner, repo } = github.context.repo;
             const prNumber = process.env.PR_NUMBER;
             const octokit = new github.getOctokit(process.env.GITHUB_TOKEN);
