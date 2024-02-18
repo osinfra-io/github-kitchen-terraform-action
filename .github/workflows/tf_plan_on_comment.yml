@@ -35,7 +35,7 @@ jobs:
 
   tfplan:
     needs: comment
-    runs-on: ${{ needs.comment.outputs.workspace }}
+    runs-on: ubuntu-latest
     name: "tf_action"
     defaults:
       run:
