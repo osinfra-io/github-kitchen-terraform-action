@@ -83,8 +83,8 @@ jobs:
           fi
 
           terraform init -reconfigure > /dev/null 2>&1
-          terraform plan out=tf.plan
-          terraform show tf.plan |& tee tf_plan.txt
+          terraform plan -out=tfplan
+          terraform show tfplan |& tee tf_plan.txt
 
         env:
           VAULT_TOKEN_QA: ${{ secrets.VAULT_TOKEN_QA }}
@@ -93,11 +93,10 @@ jobs:
         continue-on-error: true
 
       - name: Save Plan File as Artifact
-        if: steps.check_comment.outputs.TRIGGERED == 'true'
         uses: actions/upload-artifact@v2
         with:
           name: terraform-plan-${{ steps.generate_id.outputs.ID }}
-          path: tf.plan
+          path: tfplan
 
       - name: Comment on Pull Request
         uses: actions/github-script@v4
@@ -105,7 +104,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const data = fs.readFileSync('tf.plan', 'utf8');
+            const data = fs.readFileSync('tfplan', 'utf8');
             const { owner, repo } = github.context.repo;
             const prNumber = process.env.PR_NUMBER;
             const octokit = new github.getOctokit(process.env.GITHUB_TOKEN);
