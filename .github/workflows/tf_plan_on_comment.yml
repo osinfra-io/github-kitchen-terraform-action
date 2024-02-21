@@ -127,5 +127,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: context.payload.comment.id,
-              body: '**Terraform Cmd:**\n' + '```'+ context.payload.comment.body + '```' + '\n\n**Terraform Plan:**\n```' + data + '```\n' + '\n**Link:** ' + "${{ steps.job_url.outputs.html_url }}#step:6:1" + '\n\n**Artifact ID: **' + "${{ steps.plan.outputs.plan_uuid }}"
+              body: "**Terraform Cmd:** " + "`" + context.payload.comment.body + "`" + "\n\n**Terraform Plan:**\n```" + data + "```\n" + "\n**Link:** " + "${{ steps.job_url.outputs.html_url }}#step:6:1\n\n" + "**Artifact ID: **" + "${{ steps.plan.outputs.plan_uuid }}"
             })
