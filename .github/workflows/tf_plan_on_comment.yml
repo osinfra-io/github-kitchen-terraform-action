@@ -119,6 +119,6 @@ jobs:
             github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: context.comment.id,
+              comment_id: context.payload.comment.id,
               body: 'Terraform Plan:\n```' + data + '```\n',
             })
