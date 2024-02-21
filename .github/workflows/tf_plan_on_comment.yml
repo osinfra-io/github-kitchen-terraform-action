@@ -122,3 +122,11 @@ jobs:
               repo: context.repo.repo,
               body:  'Terraform Plan:\n```' + data + '```\n',
             })
+
+            github.rest.issues.updateComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.comment.id,
+              body: context.comment.body + \nTerraform Plan:\n```' + data + '```\n',
+            })
