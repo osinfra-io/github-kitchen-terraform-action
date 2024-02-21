@@ -95,7 +95,7 @@ jobs:
           terraform init -reconfigure > /dev/null 2>&1
           echo "plan_uuid=$uuid" >> "$GITHUB_OUTPUT"
           terraform plan -no-color -out=/tmp/plan-$uuid
-          terraform show -no-color/tmp/plan-$uuid | tee /tmp/plan-$uuid.txt > /dev/null 2>&1
+          terraform show -no-color /tmp/plan-$uuid | tee /tmp/plan-$uuid.txt > /dev/null 2>&1
 
         env:
           VAULT_TOKEN_QA: ${{ secrets.VAULT_TOKEN_QA }}
