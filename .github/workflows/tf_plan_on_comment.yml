@@ -103,8 +103,8 @@ jobs:
 
         continue-on-error: true
 
-      - name: Save Plan File as Artifact
-        uses: actions/upload-artifact@v2
+      - name: Save plan file as artifact
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.plan.outputs.plan_uuid }}
           path: /tmp/plan-${{ steps.plan.outputs.plan_uuid }}
@@ -127,5 +127,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: context.payload.comment.id,
-              body: "**Terraform Cmd:** " + "`" + context.payload.comment.body + "`" + "\n\n**Terraform Plan:**\n```" + data + "```\n" + "\n**Link:** " + "${{ steps.job_url.outputs.html_url }}#step:6:1\n\n" + "**Artifact ID: **" + "${{ steps.plan.outputs.plan_uuid }}"
+              body: "**Terraform Cmd:** " + "`" + context.payload.comment.body + "`" + "\n\n**Terraform Plan:**\n```" + data + "```\n" + "\n**Link:** " + "${{ steps.job_url.outputs.html_url }}#step:6:1\n\n" + "**Plan ID:** " + "`" + + "${{ steps.plan.outputs.plan_uuid }}" + "`"
             })
