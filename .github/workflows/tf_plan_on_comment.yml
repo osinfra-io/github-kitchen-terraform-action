@@ -65,6 +65,13 @@ jobs:
           npm install @actions/github
           echo "::set-output name=PR_NUMBER::$(jq -r '.issue.number' $GITHUB_EVENT_PATH)"
 
+      - name: Get Current Job Log URL
+        uses: Tiryoh/gha-jobid-action@v1
+        id: job_url
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          job_name: tf_action
+
 #      - name: Generate Unique ID
 #        id: generate_id
 #        run: echo "::set-output name=ID::$(date +%Y%m%d%H%M%S)-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1)"
@@ -116,9 +123,10 @@ jobs:
             const fs = require('fs');
             const data = fs.readFileSync('/tmp/tfplan.txt', 'utf8');
 
+
             github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: context.payload.comment.id,
-              body: '**Terraform Cmd:**\n' + '```'+ context.payload.comment.body + '```' + '\n\n**Terraform Plan:**\n```' + data + '```\n',
+              body: '**Terraform Cmd:**\n' + '```'+ context.payload.comment.body + '```' + '\n\n**Terraform Plan:**\n```' + data + '```\n' + '\n**Link:** ' + ${{ steps.job_url.outputs.html_url }}#step:6:1
             })
