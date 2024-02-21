@@ -72,9 +72,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           job_name: tf_action
 
-#      - name: Generate Unique ID
-#        id: generate_id
-#        run: echo "::set-output name=ID::$(date +%Y%m%d%H%M%S)-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1)"
+      - name: Generate Unique ID
+        id: generate_id
+        run: |
+          - echo "uuid=uuid" >> "$GITHUB_OUTPUT"
 
       - name: Plan
         id: plan
@@ -97,8 +98,8 @@ jobs:
           fi
 
           terraform init -reconfigure > /dev/null 2>&1
-          terraform plan -no-color -out=/tmp/tfplan
-          terraform show -no-color /tmp/tfplan | tee /tmp/tfplan.txt
+          terraform plan -no-color -out=/tmp/tfplan-{{ steps.generate_id.outputs.uuid }}
+          terraform show -no-color/tmp/tfplan-{{ steps.generate_id.outputs.uuid }} | tee /tmp/tfplan-{{ steps.generate_id.outputs.uuid }}.txt
 
         env:
           VAULT_TOKEN_QA: ${{ secrets.VAULT_TOKEN_QA }}
@@ -110,7 +111,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: terraform-plan
-          path: /tmp/tfplan
+          path: /tmp/tfplan-{{ steps.generate_id.outputs.uuid }}
 
       - name: Comment on Pull Request
         uses: actions/github-script@v7
@@ -119,11 +120,11 @@ jobs:
           script: |
 
             const fs = require('fs');
-            let data = fs.readFileSync('/tmp/tfplan.txt', 'utf8');
-            const MAX_GITHUB_COMMENT_LENGTH = 10;
+            let data = fs.readFileSync("/tmp/tfplan-{{ steps.generate_id.outputs.uuid }}.txt", 'utf8');
+            const MAX_GITHUB_COMMENT_LENGTH = 65536;
 
             if (data.length > MAX_GITHUB_COMMENT_LENGTH) {
-              data = "Please review the plan in github actions logs because it's too long"
+              data = "Please review the plan in github actions logs because it's too long."
             }
 
             github.rest.issues.updateComment({
