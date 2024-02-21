@@ -81,8 +81,6 @@ jobs:
         id: plan
         run: |
           set +e
-          echo "testDir"
-          pwd
           export TF_WORKSPACE=${{ needs.comment.outputs.workspace }}
           if [[ $TF_WORKSPACE == "prod" ]]; then
             unset VAULT_TOKEN
@@ -97,6 +95,8 @@ jobs:
             export VAULT_TOKEN="$VAULT_TOKEN_PROD"
           fi
 
+          export uuid={{ steps.generate_id.outputs.uuid }}
+          echo $uuid
           terraform init -reconfigure > /dev/null 2>&1
           terraform plan -no-color -out=/tmp/tfplan-{{ steps.generate_id.outputs.uuid }}
           terraform show -no-color/tmp/tfplan-{{ steps.generate_id.outputs.uuid }} | tee /tmp/tfplan-{{ steps.generate_id.outputs.uuid }}.txt
