@@ -72,11 +72,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           job_name: tf_action
 
-      - name: Generate Unique ID
-        id: generate_id
-        run: |
-          echo "uuid=$(uuidgen)" >> "$GITHUB_OUTPUT"
-
       - name: Plan
         id: plan
         run: |
@@ -95,11 +90,12 @@ jobs:
             export VAULT_TOKEN="$VAULT_TOKEN_PROD"
           fi
 
-          export uuid={{ steps.generate_id.outputs.uuid }}
+          export uuid=$(uuidgen)
           echo $uuid
           terraform init -reconfigure > /dev/null 2>&1
-          terraform plan -no-color -out=/tmp/tfplan-{{ steps.generate_id.outputs.uuid }}
-          terraform show -no-color/tmp/tfplan-{{ steps.generate_id.outputs.uuid }} | tee /tmp/tfplan-{{ steps.generate_id.outputs.uuid }}.txt
+          echo "plan_path=/tmp/plan-$uuid" >> "$GITHUB_OUTPUT"
+          terraform plan -no-color -out=/tmp/plan-$uuid
+          terraform show -no-color/tmp/plan-$uuid | tee /tmp/plan-$uuid.txt > /dev/null 2>&1
 
         env:
           VAULT_TOKEN_QA: ${{ secrets.VAULT_TOKEN_QA }}
@@ -110,8 +106,8 @@ jobs:
       - name: Save Plan File as Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: terraform-plan
-          path: /tmp/tfplan-{{ steps.generate_id.outputs.uuid }}
+          name: ${{ steps.plan.outputs.plan_path }}
+          path: ${{ steps.plan.outputs.plan_path }}
 
       - name: Comment on Pull Request
         uses: actions/github-script@v7
@@ -120,7 +116,7 @@ jobs:
           script: |
 
             const fs = require('fs');
-            let data = fs.readFileSync("/tmp/tfplan-{{ steps.generate_id.outputs.uuid }}.txt", 'utf8');
+            let data = fs.readFileSync("{{ steps.plan.outputs.plan_path }}.txt", 'utf8');
             const MAX_GITHUB_COMMENT_LENGTH = 65536;
 
             if (data.length > MAX_GITHUB_COMMENT_LENGTH) {
