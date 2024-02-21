@@ -116,7 +116,7 @@ jobs:
           script: |
 
             const fs = require('fs');
-            let data = fs.readFileSync("/tmp/plan-'{{ steps.plan.outputs.plan_uuid }}'.txt", 'utf8');
+            let data = fs.readFileSync("/tmp/plan-${{ steps.plan.outputs.plan_uuid }}.txt", 'utf8');
             const MAX_GITHUB_COMMENT_LENGTH = 65536;
 
             if (data.length > MAX_GITHUB_COMMENT_LENGTH) {
