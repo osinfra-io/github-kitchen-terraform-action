@@ -75,7 +75,7 @@ jobs:
       - name: Generate Unique ID
         id: generate_id
         run: |
-          - echo "uuid=$(uuidgen)" >> "$GITHUB_OUTPUT"
+          echo "uuid=$(uuidgen)" >> "$GITHUB_OUTPUT"
 
       - name: Plan
         id: plan
