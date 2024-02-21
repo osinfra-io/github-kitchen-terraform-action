@@ -120,5 +120,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: context.comment.id,
-              body: context.comment.body + \nTerraform Plan:\n```' + data + '```\n',
+              body: 'Terraform Plan:\n```' + data + '```\n',
             })
