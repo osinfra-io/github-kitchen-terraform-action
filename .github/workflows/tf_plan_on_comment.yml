@@ -120,7 +120,11 @@ jobs:
 
             const fs = require('fs');
             const data = fs.readFileSync('/tmp/tfplan.txt', 'utf8');
+            const MAX_GITHUB_COMMENT_LENGTH = 65536;
 
+            if (data.length > MAX_GITHUB_COMMENT_LENGTH) {
+              data = "Please review the plan in github actions logs because it's too long"
+            }
 
             github.rest.issues.updateComment({
               owner: context.repo.owner,
