@@ -129,3 +129,9 @@ jobs:
               comment_id: context.payload.comment.id,
               body: "**Terraform Cmd:** " + "`" + context.payload.comment.body + "`" + "\n\n**Terraform Plan:**\n```" + data + "```\n" + "\n**Link:** " + "${{ steps.job_url.outputs.html_url }}#step:6:1\n\n" + "**Plan ID:** " + "`" + "${{ steps.plan.outputs.plan_uuid }}" + "`"
             })
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: {{ steps.plan.outputs.plan_uuid }}
+        - name: Display structure of downloaded files
+          run: ls -R
