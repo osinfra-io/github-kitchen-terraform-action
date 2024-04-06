@@ -1,5 +1,8 @@
 # <img align="left" width="45" height="45" src="https://user-images.githubusercontent.com/1610100/202321831-9cf218f9-660d-481f-8578-c2ba19fcc93a.png"> Kitchen-Terraform Github Action
 
+> [!WARNING]
+> With the [announcement](https://www.hashicorp.com/blog/terraform-1-6-adds-a-test-framework-for-enhanced-code-validation) of a native test framework with Terraform 1.6 and the [announcement](https://github.com/newcontext-oss/kitchen-terraform/commit/e23570368e3f004edbca8149840df3f23154fcd6) of deprecating Kitchen-Terraform we have archived this repository. 
+
 **[GitHub Actions](https://github.com/osinfra-io/github-kitchen-terraform-action/actions):**
 
 [![Dependabot](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/dependabot.yml/badge.svg)](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/dependabot.yml) [![CodeQL](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/github-code-scanning/codeql) [![Docker Build and Push](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/osinfra-io/github-kitchen-terraform-action/actions/workflows/build-and-push.yml)
